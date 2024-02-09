@@ -1,4 +1,4 @@
-# QoniacCurrencyConversion
+# CurrencyConversion
 Currency Conversion to English words.
 
 - Expected input: An amount value as strings containing only numbers can be input. The input can contain ',' which shows the separation of dollars and cents.
