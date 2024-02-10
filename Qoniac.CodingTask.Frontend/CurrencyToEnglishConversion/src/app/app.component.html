@@ -1,0 +1,65 @@
+<mat-card class="example-card">
+  
+  <form [formGroup]="form">
+    
+    <mat-card-header>
+
+    <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title-group>
+        
+        <mat-card-title> Qoniac Currency Conversions </mat-card-title>
+        <mat-card-subtitle>Please enter amount in dollar currency. (e.g. 4578,88 or 7578. 
+                    Cents supported range (0-99) and dollar supported range (0-999 999 999) )</mat-card-subtitle>
+                  
+      </mat-card-title-group>
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content class="justifyMatContent">      
+      <mat-form-field class="example-full-width" appearance="outline">
+        
+        <mat-label>Amount</mat-label>
+        
+        <input matInput placeholder="Enter amount" formControlName ="currency">
+        
+        @if (form.controls["currency"].value) {
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="clearContents()">
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+
+        <mat-error *ngIf="form.get('currency')?.hasError('serverError')">
+          {{ form.get('currency')?.errors?.['serverError'] }}  
+        </mat-error>        
+
+        <mat-error *ngIf="form.get('currency')?.hasError('pattern')">
+          {{errorMessage}}
+        </mat-error>
+      </mat-form-field>
+
+      <english-words [dataSource]="dataSource">
+      </english-words>
+
+      <div class="mat-elevation-z8">                    
+      </div>
+
+      <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+        <mat-progress-spinner color="primary" mode="indeterminate">
+        </mat-progress-spinner>
+      </div>
+
+    </mat-card-content>    
+    <mat-card-actions>    
+      <button mat-raised-button color="accent" style="width: 100%" 
+                                (click)="submit()"
+                                [disabled]="form.get('currency')?.value === '' ||form.get('currency')?.hasError('pattern')">
+                                Convert to English Words
+      </button>
+    </mat-card-actions>
+  </form>
+</mat-card>
