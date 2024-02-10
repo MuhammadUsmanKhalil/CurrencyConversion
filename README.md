@@ -12,7 +12,6 @@ Currency Conversion to English words.
 - Install Node 18.16.1 or > 18.
 - Run npm install for installing all package.json components
 
-
 # Backend
 
 - The backend for this Web application is prepared in .NET 7.0
