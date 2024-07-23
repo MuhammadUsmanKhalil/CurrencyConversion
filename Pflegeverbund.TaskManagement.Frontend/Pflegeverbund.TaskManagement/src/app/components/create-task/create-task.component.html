@@ -1,0 +1,33 @@
+
+<h2 mat-dialog-title>Create New Task</h2>
+<form (ngSubmit)="onSubmit()" class="task-form">
+  <mat-dialog-content class="form-content">
+    <div class="form-section">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Task Description</mat-label>
+        <input matInput [(ngModel)]="newTaskDescription" name="description" required>
+      </mat-form-field>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="form-section">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Deadline</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="newTaskDeadline" name="deadline" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-raised-button color="accent" style="width: 100%" mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+  
+  <mat-dialog-actions>
+    <button mat-raised-button color="accent" style="width: 100%" type="submit">Add Task</button>
+  </mat-dialog-actions>
+  
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+</form>

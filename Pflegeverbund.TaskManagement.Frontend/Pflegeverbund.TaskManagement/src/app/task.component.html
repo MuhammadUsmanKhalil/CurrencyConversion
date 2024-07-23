@@ -1,0 +1,98 @@
+<mat-card>
+
+  <mat-card-header>
+
+    <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title-group>
+        
+        <mat-card-title><br/> Todo Task Management </mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+                  
+      </mat-card-title-group>
+  </mat-card-header>
+
+  <mat-divider></mat-divider>
+
+  <br/>
+  <p>
+
+  <mat-card-content>
+
+        <div class="mat-elevation-z8">
+          <mat-table class="mat-elevation-z8" 
+                    mat-table 
+                    [dataSource]="dataSource" 
+                    [multiTemplateDataRows]="true" 
+                    matSort
+                    matSortDisableClear>
+            
+              <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>                      
+
+            <ng-container matColumnDef="select">              
+                <mat-header-cell *matHeaderCellDef>
+                  <mat-checkbox (change)="$event ? toggleAllSelection() : null" name="taskSelect"
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()">
+                  </mat-checkbox>
+                </mat-header-cell>
+
+                <mat-cell *matCellDef="let row">               
+                <mat-checkbox (click)="row.isDone ? $event.stopPropagation() : ''"
+                              (change)="$event ? selection.toggle(row) : null"
+                              [checked]="selection.isSelected(row)"
+                              [disabled]="row.isDone">
+                </mat-checkbox>
+                </mat-cell>
+            </ng-container>
+          
+            <ng-container matColumnDef="description">
+              <mat-header-cell *matHeaderCellDef> Description. </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>              
+            </ng-container>
+
+            <ng-container matColumnDef="deadline">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Deadline </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.deadline | date:'dd/MM/yyyy h:mm a'}}  </mat-cell>
+            </ng-container>
+            
+            <ng-container matColumnDef="status">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Status <button matSuffix mat-icon-button aria-label="Clear" [matMenuTriggerFor]="menu">
+                <mat-icon>filter_list</mat-icon>
+              </button>
+              <mat-menu #menu>
+                  <ng-template matMenuContent>
+                    <div *ngFor="let item of taskStatuses">
+                        <mat-checkbox class="mat-menu-item" (change)="onFilterTask(item)">{{item }}</mat-checkbox>  
+                    </div>
+                  </ng-template>
+                </mat-menu>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element"> <p>{{ element.status  }}</p> </mat-cell>
+            </ng-container>            
+                        
+            <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+
+            <mat-row *matRowDef="let task; columns: displayedColumns;" [ngClass]="{'overdue-task-row': task.isOverdue == true}"/>                        
+          </mat-table>
+          <mat-paginator [length]="totalItems"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="[5, 10, 20]"
+               (page)="$event; loadPage($event.pageIndex, $event.pageSize)">
+          </mat-paginator>
+          
+        </div>
+  </mat-card-content>
+  
+  <mat-card-actions>    
+    <button mat-raised-button color="accent" style="width: 100%" (click)="createTask()"> Create Task</button>
+  </mat-card-actions>
+
+  <mat-card-actions>    
+    <button mat-raised-button color="accent" style="width: 100%" [disabled]="!selection.hasValue()" (click)="markSelectedAsComplete()"> Mark as Complete </button>
+  </mat-card-actions>
+
+  <mat-card-actions>    
+    <button mat-raised-button color="accent" style="width: 100%" [disabled]="!selection.hasValue()" (click)="deleteSelectedTasks()"> Delete</button>
+  </mat-card-actions>
+
+</mat-card>

@@ -1,0 +1,37 @@
+
+.todoCard {
+    max-width: 50% !important;
+    min-width: 50% !important;
+    background-color: blueviolet;
+}
+
+.todoCardContent {
+    max-width: 90% !important;
+    min-width: 96% !important;
+    background-color: aqua;
+    margin-left : 1%;
+}
+
+.mat-checkbox-taskSelect{
+    background-color:  blue;
+}
+
+.overdue-task-row {
+    background-color: red
+}
+
+.mat-header-cell {
+    .mat-sort-header-sorted {
+      color: black;
+    }
+  }
+  
+  .mat-row {
+    border-bottom: 0;
+  
+    &:hover {
+      cursor: pointer;
+      background-color: rgba(0, 0, 0, .1);
+    }
+  }
+  

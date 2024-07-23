@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\PflegeVerbundhilfe.TaskManagement.props" />
+</Project>
